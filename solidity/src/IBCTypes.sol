@@ -19,19 +19,6 @@ library IbcCoreChannelV1Channel {
     }
 }
 
-library IbcCoreChannelV1IdentifiedChannel {
-    //struct definition
-    struct Data {
-        IbcCoreChannelV1GlobalEnums.State state;
-        IbcCoreChannelV1GlobalEnums.Order ordering;
-        IbcCoreChannelV1Counterparty.Data counterparty;
-        string[] connection_hops;
-        string version;
-        string port_id;
-        string channel_id;
-    }
-}
-
 library IbcCoreChannelV1Counterparty {
     //struct definition
     struct Data {

@@ -49,16 +49,13 @@ contract PingPong is IIBCModule {
     IIBCPacketHandler private ibcHandler;
     string private portId;
     string private channelId;
-    uint64 private revisionNumber;
     uint64 private timeout;
 
     constructor(
         IIBCPacketHandler _ibcHandler,
-        uint64 _revisionNumber,
         uint64 _timeout
     ) {
         ibcHandler = _ibcHandler;
-        revisionNumber = _revisionNumber;
         timeout = _timeout;
     }
 
