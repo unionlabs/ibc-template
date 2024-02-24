@@ -57,7 +57,7 @@
         ];
         packages.default = pkgs.hello;
         devShells.default =
-          pkgs.mkShell { buildInputs = with pkgs; [ foundry-bin solc ]; };
+          pkgs.mkShell { buildInputs = with pkgs; [ foundry-bin solc binaryen ]; };
       };
       imports = [ ];
       flake = { };
