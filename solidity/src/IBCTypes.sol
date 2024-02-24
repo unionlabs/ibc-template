@@ -32,7 +32,13 @@ library IbcCoreChannelV1IdentifiedChannel {
     }
 }
 
-//library IbcCoreChannelV1Counterparty
+library IbcCoreChannelV1Counterparty {
+    //struct definition
+    struct Data {
+        string port_id;
+        string channel_id;
+    }
+}
 
 library IbcCoreChannelV1Packet {
     //struct definition
@@ -48,8 +54,6 @@ library IbcCoreChannelV1Packet {
     }
 }
 
-//library IbcCoreChannelV1Packet
-
 library IbcCoreChannelV1PacketState {
     //struct definition
     struct Data {
@@ -60,8 +64,6 @@ library IbcCoreChannelV1PacketState {
     }
 }
 
-//library IbcCoreChannelV1PacketState
-
 library IbcCoreChannelV1PacketId {
     //struct definition
     struct Data {
@@ -71,7 +73,6 @@ library IbcCoreChannelV1PacketId {
     }
 }
 
-//library IbcCoreChannelV1PacketId
 
 library IbcCoreChannelV1Acknowledgement {
     //struct definition
@@ -81,11 +82,8 @@ library IbcCoreChannelV1Acknowledgement {
     }
 }
 
-//library IbcCoreChannelV1Acknowledgement
-
 library IbcCoreChannelV1GlobalEnums {
     //enum definition
-    // Solidity enum definitions
     enum State {
         STATE_UNINITIALIZED_UNSPECIFIED,
         STATE_INIT,
@@ -93,8 +91,12 @@ library IbcCoreChannelV1GlobalEnums {
         STATE_OPEN,
         STATE_CLOSED
     }
+    enum Order {
+        ORDER_NONE_UNSPECIFIED,
+        ORDER_UNORDERED,
+        ORDER_ORDERED
+    }
 }
-//library IbcCoreChannelV1GlobalEnums
 
 struct MsgPacketRecv {
     IbcCoreChannelV1Packet.Data packet;

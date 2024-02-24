@@ -211,7 +211,7 @@ contract PingPong is IIBCModule {
      * @dev Throws if the sender is not the IBC contract.
      */
     function _checkIBC() internal view virtual {
-        if (_ibcHandler != _msgSender()) {
+        if (address(ibcHandler) != msg.sender) {
             revert PingPongLib.ErrNotIBC();
         }
     }
