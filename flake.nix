@@ -4,13 +4,15 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     foundry.url = "github:shazow/foundry.nix/monthly";
+    rust-overlay.url = "github:oxalica/rust-overlay";
   };
-  outputs = inputs@{ flake-parts, nixpkgs, foundry, ... }:
+  outputs = inputs@{ flake-parts, nixpkgs, foundry, rust-overlay, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems =
         [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin" ];
       perSystem = { config, self', inputs', pkgs, system, ... }: {
         _module.args.pkgs = nixpkgs.legacyPackages.${system}.appendOverlays [
+          rust-overlay.overlays.default
           foundry.overlay
           (self: super: {
             solc = let
@@ -56,8 +58,15 @@
           })
         ];
         packages.default = pkgs.hello;
-        devShells.default =
-          pkgs.mkShell { buildInputs = with pkgs; [ foundry-bin solc binaryen ]; };
+        devShells.default = pkgs.mkShell {
+          buildInputs = with pkgs; [
+            nixfmt
+            foundry-bin
+            solc
+            binaryen
+            (rust-bin.fromRustupToolchainFile ./rust-toolchain)
+          ];
+        };
       };
       imports = [ ];
       flake = { };
