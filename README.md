@@ -14,6 +14,7 @@ If you don't want to install nix, here are the required tools:
 - forge (0.2.0 (2cb8757 2024-02-03T00:16:46.961268899Z))
 - rustup (see ./rust-toolchain)
 - binaryen (wasm-opt version 116)
+- docker (24.0.5)
 
 ## Hacking the protocol
 
@@ -31,7 +32,7 @@ Make sure to have:
 
 ### Cosmwasm
 
-Run the following command and make sure to save the resulting value (we name it `COSMWASM_CONTRACT_ADDRESS`) to then deplo the solidity contracts:
+Run the following command and make sure to save the resulting value (we name it `COSMWASM_CONTRACT_ADDRESS`) to then deploy the solidity contracts:
 `PRIVATE_KEY=<UNION_HEX_PRIVATE_KEY> make deploy-union`
 
 https://testnet.union.explorers.guru
