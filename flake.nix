@@ -18,6 +18,7 @@
         packages.default = pkgs.hello;
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
+            jq
             nixfmt
             foundry-bin
             binaryen

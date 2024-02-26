@@ -1,19 +1,34 @@
+rpc_url := https://ethereum-sepolia-rpc.publicnode.com
+# Pre-deployed ibc handler from Union
+ibc_handler := 0x80ae19d672f3bf5c733e11b7d1a2b880e338165f
+
+# Application specific, used when creating the contract (threaded to the
+# constructor). The version is provided when opening the channel.
+application_default_pingpong_timeout := "3600"
+
+application_port := $(shell xxd -l16 -ps /dev/urandom)
+application_protocol_version = ucs00-pingpong-1
+
+channel_state_init := 1
+channel_order_unordered := 1
+# Pre-created ibc connection from Union
+channel_connection := connection-0
+
+.PHONY: deploy bind-port open-channel
+
 deploy:
 	forge create src/PingPong.sol:PingPong \
-		--rpc-url "https://ethereum-sepolia-rpc.publicnode.com" \
+    --json \
+		--rpc-url ${rpc_url} \
 		--private-key ${PRIVATE_KEY} \
-		--constructor-args "0x80Ae19d672F3Bf5c733E11B7D1a2B880E338165f" "3600"
-
-bind-port:
-	cast send \
-		--private-key ${PRIVATE_KEY} \
-		--rpc-url "https://ethereum-sepolia-rpc.publicnode.com" \
-		0x80Ae19d672F3Bf5c733E11B7D1a2B880E338165f \
-		"bindPort(string, address)" "pingpong-1" "0xB1244a01b031F68368430891b2D074F00664075d"
-
-open-channel:
-	cast send \
-		--private-key ${PRIVATE_KEY} \
-		--rpc-url "https://ethereum-sepolia-rpc.publicnode.com" \
-		0x80Ae19d672F3Bf5c733E11B7D1a2B880E338165f \
-		"channelOpenInit((string, (uint8, uint8, (string, string), string[], string)))" '("pingpong-1", (1, 1, ("wasm.blabla", ""), ["connection-0"], "ucs00-pingpong-1"))'
+		--constructor-args "${ibc_handler}" "${application_default_pingpong_timeout}" | jq .deployedTo | \
+		xargs -I{} cast send \
+			--rpc-url ${rpc_url} \
+			--private-key ${PRIVATE_KEY} \
+			${ibc_handler} \
+			"bindPort(string, address)" "${application_port}" "{}" && \
+		cast send \
+			--rpc-url ${rpc_url} \
+			--private-key ${PRIVATE_KEY} \
+			${ibc_handler} \
+			"channelOpenInit((string, (uint8, uint8, (string, string), string[], string)))" '("${application_port}", (${channel_state_init}, ${channel_order_unordered}, ("wasm.${COSMWASM_CONTRACT_ADDRESS}", ""), ["${channel_connection}"], "${application_protocol_version}"))'

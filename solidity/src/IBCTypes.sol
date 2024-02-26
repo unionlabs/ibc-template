@@ -60,7 +60,6 @@ library IbcCoreChannelV1PacketId {
     }
 }
 
-
 library IbcCoreChannelV1Acknowledgement {
     //struct definition
     struct Data {

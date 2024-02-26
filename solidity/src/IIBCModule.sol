@@ -32,34 +32,21 @@ interface IIBCModule {
         string calldata counterpartyVersion
     ) external;
 
-    function onChanOpenConfirm(
-        string calldata portId,
-        string calldata channelId
-    ) external;
+    function onChanOpenConfirm(string calldata portId, string calldata channelId) external;
 
-    function onChanCloseInit(
-        string calldata portId,
-        string calldata channelId
-    ) external;
+    function onChanCloseInit(string calldata portId, string calldata channelId) external;
 
-    function onChanCloseConfirm(
-        string calldata portId,
-        string calldata channelId
-    ) external;
+    function onChanCloseConfirm(string calldata portId, string calldata channelId) external;
 
-    function onRecvPacket(
-        IbcCoreChannelV1Packet.Data calldata,
-        address relayer
-    ) external returns (bytes memory);
+    function onRecvPacket(IbcCoreChannelV1Packet.Data calldata packet, address relayer)
+        external
+        returns (bytes memory);
 
     function onAcknowledgementPacket(
-        IbcCoreChannelV1Packet.Data calldata,
+        IbcCoreChannelV1Packet.Data calldata packet,
         bytes calldata acknowledgement,
         address relayer
     ) external;
 
-    function onTimeoutPacket(
-        IbcCoreChannelV1Packet.Data calldata,
-        address relayer
-    ) external;
+    function onTimeoutPacket(IbcCoreChannelV1Packet.Data calldata packet, address relayer) external;
 }

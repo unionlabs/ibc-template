@@ -41,9 +41,7 @@ interface IIBCPacketHandler {
      * which is no longer necessary since the packet has been received and acted upon.
      * It will also increment NextSequenceAck in case of ORDERED channels.
      */
-    function acknowledgePacket(
-        MsgPacketAcknowledgement calldata msg_
-    ) external;
+    function acknowledgePacket(MsgPacketAcknowledgement calldata msg_) external;
 
     /**
      * @dev timeoutPacket is called by a module in order to receive & process an IBC packet
