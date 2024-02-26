@@ -1,7 +1,6 @@
 pragma solidity ^0.8.24;
 
 library IbcCoreClientV1Height {
-    //struct definition
     struct Data {
         uint64 revision_number;
         uint64 revision_height;
@@ -9,7 +8,6 @@ library IbcCoreClientV1Height {
 }
 
 library IbcCoreChannelV1Channel {
-    //struct definition
     struct Data {
         IbcCoreChannelV1GlobalEnums.State state;
         IbcCoreChannelV1GlobalEnums.Order ordering;
@@ -20,7 +18,6 @@ library IbcCoreChannelV1Channel {
 }
 
 library IbcCoreChannelV1Counterparty {
-    //struct definition
     struct Data {
         string port_id;
         string channel_id;
@@ -28,7 +25,6 @@ library IbcCoreChannelV1Counterparty {
 }
 
 library IbcCoreChannelV1Packet {
-    //struct definition
     struct Data {
         uint64 sequence;
         string source_port;
@@ -42,7 +38,6 @@ library IbcCoreChannelV1Packet {
 }
 
 library IbcCoreChannelV1PacketState {
-    //struct definition
     struct Data {
         string port_id;
         string channel_id;
@@ -52,7 +47,6 @@ library IbcCoreChannelV1PacketState {
 }
 
 library IbcCoreChannelV1PacketId {
-    //struct definition
     struct Data {
         string port_id;
         string channel_id;
@@ -61,7 +55,6 @@ library IbcCoreChannelV1PacketId {
 }
 
 library IbcCoreChannelV1Acknowledgement {
-    //struct definition
     struct Data {
         bytes result;
         string error;
@@ -69,7 +62,6 @@ library IbcCoreChannelV1Acknowledgement {
 }
 
 library IbcCoreChannelV1GlobalEnums {
-    //enum definition
     enum State {
         STATE_UNINITIALIZED_UNSPECIFIED,
         STATE_INIT,
