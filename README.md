@@ -55,7 +55,7 @@ Copy the relevant ABI:
 ```sh
 cat solidity/out/PingPong.sol/PingPong.json | jq '.abi'
 ```
-See this Stackblitz example that showcases how to use the Sepolia contract address you created and the generated ABI: [Stackblitz link](https://stackblitz.com/edit/github-28ywre?file=index.ts)
+See this Stackblitz example that showcases how to use the Sepolia contract address you created and the generated ABI: [Stackblitz link](https://stackblitz.com/edit/github-28ywre?file=index.ts&view=editor)
 
 
 ## Helpful links
