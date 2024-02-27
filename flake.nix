@@ -22,8 +22,10 @@
             nixfmt
             foundry-bin
             binaryen
+            unixtools.xxd
             (rust-bin.fromRustupToolchainFile ./rust-toolchain)
           ];
+          LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";
         };
       };
       imports = [ ];
