@@ -4,3 +4,6 @@ cache
 build
 .direnv
 cosmwasm/.keyring
+node_modules
+dist
+_web
