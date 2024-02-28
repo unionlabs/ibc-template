@@ -23,6 +23,9 @@
             foundry-bin
             binaryen
             unixtools.xxd
+            nodejs_21
+            python3
+            bun
             (rust-bin.fromRustupToolchainFile ./rust-toolchain)
           ];
           LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";
