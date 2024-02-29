@@ -7,7 +7,7 @@
     "dev": "vite dev",
     "build": "vite build",
     "preview": "vite preview",
-    "demo-initiate": "node --import=tsx ./scripts/handshake.ts",
+    "demo-initiate": "node --import=tsx --env-file='./.env' ./scripts/demo-initiate.ts",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "lint": "eslint --fix . --ext='js,cjs,mjs,ts,d.ts,json,svelte' --report-unused-disable-directives --max-warnings=0 --cache",

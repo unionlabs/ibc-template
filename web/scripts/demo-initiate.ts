@@ -6,6 +6,12 @@ import { pingPongAbi } from '$/lib/abi/ping-pong.ts'
 import { simulateContract, writeContract } from 'viem/actions'
 import { createWalletClient, http, isAddress, isHex } from 'viem'
 
+/**
+ * Run this with:
+ * `node --import=tsx --env-file='./.env' ./scripts/demo-initiate.ts`
+ * Make sure to set environment variables in `.env`.
+ */
+
 const MAX_BIG_INTEGER = BigInt(Number.MAX_SAFE_INTEGER)
 
 const PRIVATE_KEY = isHex(process.env.PRIVATE_KEY)
