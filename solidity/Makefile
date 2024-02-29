@@ -20,7 +20,7 @@ deploy:
     --json \
 		--rpc-url ${rpc_url} \
 		--private-key ${PRIVATE_KEY} \
-		--constructor-args "${ibc_handler}" "${application_default_pingpong_timeout}" | jq .deployedTo | sed 's/.*/\L&/' | \
+		--constructor-args "${ibc_handler}" "${application_default_pingpong_timeout}" | jq .deployedTo | \
 		xargs -I{} cast send \
 			--rpc-url ${rpc_url} \
 			--private-key ${PRIVATE_KEY} \
