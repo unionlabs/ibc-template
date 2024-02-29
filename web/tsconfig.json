@@ -10,9 +10,12 @@
     "sourceMap": true,
     "strict": true,
     "verbatimModuleSyntax": true,
-    "moduleResolution": "bundler",
+    "moduleResolution": "Bundler",
     "allowImportingTsExtensions": true,
-    "types": ["typed-query-selector/strict"]
+    "types": [
+      "node",
+      "typed-query-selector/strict"
+    ]
   },
   "files": [
     "reset.d.ts",
@@ -21,7 +24,8 @@
     ".prettierrc.mjs",
     "svelte.config.js",
     "tailwind.config.ts",
-    "postcss.config.cjs"
+    "postcss.config.cjs",
+    "scripts/handshake.ts",
   ]
   // Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
   //

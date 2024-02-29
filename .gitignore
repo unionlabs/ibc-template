@@ -7,3 +7,4 @@ cosmwasm/.keyring
 node_modules
 dist
 _web
+.vscode

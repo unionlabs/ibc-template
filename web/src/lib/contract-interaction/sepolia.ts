@@ -6,7 +6,7 @@ import { simulateContract, writeContract } from '@wagmi/core'
 
 export const sepoliaTransactions = writable<Array<Hex>>([])
 
-export async function pingSepolia(): Promise<Hash> {
+export async function initiateSepolia(): Promise<Hash> {
   const { request } = await simulateContract(config, {
     abi: pingPongAbi,
     functionName: 'initiate',
