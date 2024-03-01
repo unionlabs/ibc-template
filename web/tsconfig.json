@@ -25,6 +25,8 @@
     "svelte.config.js",
     "tailwind.config.ts",
     "postcss.config.cjs",
+    "scripts/client.ts",
+    "scripts/receipt.ts",
     "scripts/demo-initiate.ts",
   ]
   // Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
