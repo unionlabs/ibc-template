@@ -32,7 +32,7 @@ async function handshake() {
     abi: pingPongAbi,
     address: SEPOLIA_CONTRACT_ADDRESS,
     functionName: 'initiate',
-    args: [{ ping: true, counterpartyTimeout: MAX_BIG_INTEGER }, MAX_BIG_INTEGER]
+      args: [{ ping: true, counterpartyTimeout: 18446744073709551615n }, 18446744073709551615n]
   })
   const hash = await writeContract(sepoliaClient, request)
 

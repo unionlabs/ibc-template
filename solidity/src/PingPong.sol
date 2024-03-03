@@ -12,6 +12,7 @@ struct PingPongPacket {
 library PingPongLib {
     bytes32 public constant PROTOCOL_VERSION = keccak256("ucs00-pingpong-1");
     bytes1 public constant ACK_SUCCESS = 0x01;
+    bytes1 public constant ACK_FAILURE = 0x01;
 
     error ErrInvalidVersion();
     error ErrNotIBC();
@@ -63,13 +64,11 @@ contract PingPong is IIBCModule {
         );
     }
 
-    function onRecvPacket(IbcCoreChannelV1Packet.Data calldata packet, address relayer)
-        external
-        virtual
-        override
-        onlyIBC
-        returns (bytes memory acknowledgement)
+    function onRecvPacketProcessing(IbcCoreChannelV1Packet.Data calldata packet, address relayer)
+        public
     {
+        require(msg.sender == address(this), "unauthorized");
+
         PingPongPacket memory pp = PingPongLib.decode(packet.data);
 
         emit PingPongLib.Ring(pp.ping);
@@ -81,9 +80,24 @@ contract PingPong is IIBCModule {
 
         // Send back the packet after having reversed the bool and set the counterparty timeout
         initiate(pp, localTimeout);
+    }
 
-        // Return protocol specific successful acknowledgement
-        return abi.encodePacked(PingPongLib.ACK_SUCCESS);
+    function onRecvPacket(IbcCoreChannelV1Packet.Data calldata packet, address relayer)
+        external
+        virtual
+        override
+        onlyIBC
+        returns (bytes memory acknowledgement)
+    {
+        (bool success, bytes memory _res) =
+            address(this).call(abi.encodeWithSelector(this.onRecvPacketProcessing.selector, packet, relayer));
+        // We make sure not to revert to allow the failure ack to be sent back,
+        // resulting in a refund.
+        if (success) {
+            return abi.encodePacked(PingPongLib.ACK_SUCCESS);
+        } else {
+            return abi.encodePacked(PingPongLib.ACK_FAILURE);
+        }
     }
 
     function onAcknowledgementPacket(

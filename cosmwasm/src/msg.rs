@@ -12,10 +12,10 @@ pub struct PacketData {
 
 impl PacketData {
     pub fn decode(bz: impl AsRef<[u8]>) -> Result<Self, ContractError> {
-        let values = ethabi::decode(&[ParamType::Bool, ParamType::Int(64)], bz.as_ref())
+        let values = ethabi::decode(&[ParamType::Bool, ParamType::Uint(64)], bz.as_ref())
             .map_err(|_| ContractError::EthAbiDecoding)?;
         match &values[..] {
-            &[Token::Bool(ping), Token::Int(counterparty_timeout_timestamp)] => Ok(PacketData {
+            &[Token::Bool(ping), Token::Uint(counterparty_timeout_timestamp)] => Ok(PacketData {
                 ping,
                 counterparty_timeout_timestamp: counterparty_timeout_timestamp.as_u64(),
             }),
@@ -26,7 +26,7 @@ impl PacketData {
     pub fn encode(&self) -> Vec<u8> {
         ethabi::encode(&[
             Token::Bool(self.ping),
-            Token::Int(self.counterparty_timeout_timestamp.into()),
+            Token::Uint(self.counterparty_timeout_timestamp.into()),
         ])
     }
 }
@@ -40,8 +40,8 @@ impl PacketData {
     ) -> IbcMsg {
         let counterparty_packet = PacketData {
             ping: !self.ping,
-            counterparty_timeout_timestamp: config.protocol_timeout_seconds
-                + current_block_timestamp,
+            counterparty_timeout_timestamp: current_block_timestamp
+                + (config.protocol_timeout_seconds * 1000000000),
         };
         IbcMsg::SendPacket {
             channel_id,

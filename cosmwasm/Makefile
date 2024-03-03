@@ -18,7 +18,7 @@ deploy: build
 		jq .txhash | \
 		xargs -I{} sh -c "${union_cmd} query event-query-tx-for {} --output json --node ${rpc_url} || ${union_cmd} query tx {} --output json --node ${rpc_url}" | \
 		jq -r '.events[] | select(.type == "store_code") | .attributes[] | select(.key == "code_id") | .value' | \
-		xargs -I{} ${union_cmd} tx wasm instantiate2 {} '{ "config": { "protocol_timeout_seconds": 3600, "revision_number": 0 }}' ${contract_salt} --label ${contract_label} --no-admin --gas auto --gas-adjustment 1.5 --output json -y --keyring-backend test --keyring-dir /keyring --node ${rpc_url} --chain-id ${chain_id} --from ${account_name} | \
+		xargs -I{} ${union_cmd} tx wasm instantiate2 {} '{ "config": { "protocol_timeout_seconds": 3600 }}' ${contract_salt} --label ${contract_label} --no-admin --gas auto --gas-adjustment 1.5 --output json -y --keyring-backend test --keyring-dir /keyring --node ${rpc_url} --chain-id ${chain_id} --from ${account_name} | \
 		jq .txhash | \
 		xargs -I{} sh -c "${union_cmd} query event-query-tx-for {} --output json --node ${rpc_url} || ${union_cmd} query tx {} --output json --node ${rpc_url}" | \
 		jq -r '.events[] | select(.type == "instantiate") | .attributes[] | select(.key == "_contract_address") | .value' | \

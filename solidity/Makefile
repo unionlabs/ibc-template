@@ -11,7 +11,7 @@ application_protocol_version = ucs00-pingpong-1
 channel_state_init := 1
 channel_order_unordered := 1
 # Pre-created ibc connection from Union
-channel_connection := connection-0
+channel_connection := connection-1
 
 .PHONY: deploy bind-port open-channel
 
