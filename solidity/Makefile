@@ -1,11 +1,10 @@
 rpc_url := https://ethereum-sepolia-rpc.publicnode.com
 # Pre-deployed ibc handler from Union
-ibc_handler := 0x4466196F00F10E633789ac7f054a54a82e4b78C7
+ibc_handler := 0x6b6b60a68b8dcbb170f25045974d10098917f816
 
 # Application specific, used when creating the contract (threaded to the
 # constructor). The version is provided when opening the channel.
-application_default_pingpong_timeout := "3600"
-
+application_default_pingpong_timeout := "3600000000000"
 application_protocol_version = ucs00-pingpong-1
 
 channel_state_init := 1
@@ -13,7 +12,7 @@ channel_order_unordered := 1
 # Pre-created ibc connection from Union
 channel_connection := connection-1
 
-.PHONY: deploy bind-port open-channel
+.PHONY: deploy
 
 deploy:
 	forge create src/PingPong.sol:PingPong \
@@ -26,3 +25,12 @@ deploy:
 			--private-key ${PRIVATE_KEY} \
 			${ibc_handler} \
 			"channelOpenInit((string, (uint8, uint8, (string, string), string[], string)))" '("{}", (${channel_state_init}, ${channel_order_unordered}, ("wasm.${COSMWASM_CONTRACT_ADDRESS}", ""), ["${channel_connection}"], "${application_protocol_version}"))'
+
+# 0x7D52597681a088EEb488cFa3135457903CfF06dA
+initiate:
+	cast send \
+		--rpc-url ${rpc_url} \
+		--private-key ${PRIVATE_KEY} \
+		${CONTRACT_ADDRESS} \
+		"initiate((bool, uint64), uint64)" "(true, 18446744073709551615)" 18446744073709551615
+

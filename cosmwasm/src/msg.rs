@@ -40,13 +40,12 @@ impl PacketData {
     ) -> IbcMsg {
         let counterparty_packet = PacketData {
             ping: !self.ping,
-            counterparty_timeout_timestamp: current_block_timestamp
-                + (config.protocol_timeout_seconds * 1000000000),
+            counterparty_timeout_timestamp: current_block_timestamp + config.protocol_timeout,
         };
         IbcMsg::SendPacket {
             channel_id,
             data: counterparty_packet.encode().into(),
-            timeout: IbcTimeout::with_timestamp(Timestamp::from_seconds(
+            timeout: IbcTimeout::with_timestamp(Timestamp::from_nanos(
                 self.counterparty_timeout_timestamp,
             )),
         }

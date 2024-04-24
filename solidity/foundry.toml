@@ -3,3 +3,4 @@ src = "src"
 out = "out"
 libs = ["src"]
 ignored_error_codes = [ 5667 ]
+via_ir = true

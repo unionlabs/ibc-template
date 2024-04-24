@@ -3,3 +3,6 @@ deploy-evm:
 
 deploy-union:
 	make -C cosmwasm deploy
+
+initiate-evm:
+	make -C solidity initiate

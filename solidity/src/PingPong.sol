@@ -76,7 +76,7 @@ contract PingPong is IIBCModule {
         uint64 localTimeout = pp.counterpartyTimeout;
 
         pp.ping = !pp.ping;
-        pp.counterpartyTimeout = uint64(block.timestamp) + timeout;
+        pp.counterpartyTimeout = uint64(block.timestamp * 1e9) + timeout;
 
         // Send back the packet after having reversed the bool and set the counterparty timeout
         initiate(pp, localTimeout);

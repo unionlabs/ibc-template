@@ -3,7 +3,7 @@ use cw_storage_plus::Item;
 
 #[cw_serde]
 pub struct Config {
-    pub protocol_timeout_seconds: u64,
+    pub protocol_timeout: u64,
 }
 
 pub const CONFIG: Item<Config> = Item::new("config");
