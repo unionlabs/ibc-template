@@ -1,4 +1,4 @@
-union_version := v0.21.0
+union_version := v0.22.0
 union_cmd := docker run --rm --network host -v /tmp:/tmp -v $(PWD)/cosmwasm/build:/build -v $(PWD)/cosmwasm/.keyring:/keyring ghcr.io/unionlabs/uniond-release:${union_version}
 
 rpc_url := https://rpc.testnet.bonlulu.uno:443

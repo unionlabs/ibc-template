@@ -62,6 +62,19 @@ curl https://raw.githubusercontent.com/cosmos/chain-registry/master/testnets/uni
 
 See this Stackblitz example that showcases how to use the Sepolia contract address you created and the generated ABI: [Stackblitz link](https://stackblitz.com/edit/github-28ywre?file=index.ts&view=editor)
 
+
+## IBC Stack
+
+Client connetion: `connection-0`
+
+### Contract Addresses
+
+#### Testnet 8
+- IBCHandler: [0xa390514f803a3b318b93bf6cd4beeb9f8299a0eb](https://sepolia.etherscan.io/address/0xa390514f803a3b318b93bf6cd4beeb9f8299a0eb)
+- CometblsClient: [0x96979ed96ae00d724109b5ad859568e1239c0837](https://sepolia.etherscan.io/address/0x96979ed96ae00d724109b5ad859568e1239c0837)
+- UCS01: [0xd0081080ae8493cf7340458eaf4412030df5feeb](https://sepolia.etherscan.io/address/0xd0081080ae8493cf7340458eaf4412030df5feeb)
+- UCS02: [0x9153952f174a1bcd7a9b3818ff21ecf918d4dca9](https://sepolia.etherscan.io/address/0x9153952f174a1bcd7a9b3818ff21ecf918d4dca9)
+
 ## Helpful links
 
 - Cosmwasm docs: https://book.cosmwasm.com/

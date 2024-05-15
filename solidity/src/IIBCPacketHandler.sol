@@ -4,7 +4,6 @@ import "./IBCTypes.sol";
 
 interface IIBCPacketHandler {
     function sendPacket(
-        string calldata sourcePort,
         string calldata sourceChannel,
         IbcCoreClientV1Height.Data calldata timeoutHeight,
         uint64 timeoutTimestamp,
@@ -14,13 +13,13 @@ interface IIBCPacketHandler {
     function recvPacket(MsgPacketRecv calldata msg_) external;
 
     function writeAcknowledgement(
-        string calldata destinationPortId,
         string calldata destinationChannel,
         uint64 sequence,
         bytes calldata acknowledgement
     ) external;
 
-    function acknowledgePacket(MsgPacketAcknowledgement calldata msg_) external;
+    function acknowledgePacket(MsgPacketAcknowledgement calldata msg_)
+        external;
 
     function timeoutPacket(MsgPacketTimeout calldata msg_) external;
 }

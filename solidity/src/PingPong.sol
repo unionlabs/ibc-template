@@ -38,10 +38,9 @@ library PingPongLib {
 contract PingPong is IIBCModule {
     using PingPongLib for *;
 
-    IIBCPacketHandler private ibcHandler;
-    string private portId;
-    string private channelId;
-    uint64 private timeout;
+    IIBCPacketHandler public ibcHandler;
+    string public channelId;
+    uint64 public timeout;
 
     constructor(IIBCPacketHandler _ibcHandler, uint64 _timeout) {
         ibcHandler = _ibcHandler;
@@ -53,7 +52,6 @@ contract PingPong is IIBCModule {
             revert PingPongLib.ErrNoChannel();
         }
         ibcHandler.sendPacket(
-            portId,
             channelId,
             // No height timeout
             IbcCoreClientV1Height.Data({revision_number: 0, revision_height: 0}),
@@ -89,10 +87,10 @@ contract PingPong is IIBCModule {
         onlyIBC
         returns (bytes memory acknowledgement)
     {
+        // We wrap in a sub-transaction to avoid reverting the call, returning a failure ack instead.
+        // If we were to revert in this call the packet would never be able to be acked back (timeout would occur later).
         (bool success, bytes memory _res) =
             address(this).call(abi.encodeWithSelector(this.onRecvPacketProcessing.selector, packet, relayer));
-        // We make sure not to revert to allow the failure ack to be sent back,
-        // resulting in a refund.
         if (success) {
             return abi.encodePacked(PingPongLib.ACK_SUCCESS);
         } else {
@@ -174,13 +172,11 @@ contract PingPong is IIBCModule {
             revert PingPongLib.ErrInvalidVersion();
         }
         // Store the port/channel needed to send packets.
-        portId = _portId;
         channelId = _channelId;
     }
 
     function onChanOpenConfirm(string calldata _portId, string calldata _channelId) external virtual override onlyIBC {
         // Symmetric to onChanOpenAck
-        portId = _portId;
         channelId = _channelId;
     }
 

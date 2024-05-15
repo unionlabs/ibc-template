@@ -1,6 +1,6 @@
-rpc_url := https://ethereum-sepolia-rpc.publicnode.com
-# Pre-deployed ibc handler from Union
-ibc_handler := 0x6b6b60a68b8dcbb170f25045974d10098917f816
+rpc_url := https://sepolia.drpc.org
+# Pre-deployed ibc handler from Union, see README.md for the contract addresses
+ibc_handler := 0xa390514f803a3b318b93bf6cd4beeb9f8299a0eb
 
 # Application specific, used when creating the contract (threaded to the
 # constructor). The version is provided when opening the channel.
@@ -9,8 +9,8 @@ application_protocol_version = ucs00-pingpong-1
 
 channel_state_init := 1
 channel_order_unordered := 1
-# Pre-created ibc connection from Union
-channel_connection := connection-1
+# Pre-created by Union
+channel_connection := connection-0
 
 .PHONY: deploy
 
@@ -26,7 +26,6 @@ deploy:
 			${ibc_handler} \
 			"channelOpenInit((string, (uint8, uint8, (string, string), string[], string)))" '("{}", (${channel_state_init}, ${channel_order_unordered}, ("wasm.${COSMWASM_CONTRACT_ADDRESS}", ""), ["${channel_connection}"], "${application_protocol_version}"))'
 
-# 0x7D52597681a088EEb488cFa3135457903CfF06dA
 initiate:
 	cast send \
 		--rpc-url ${rpc_url} \
