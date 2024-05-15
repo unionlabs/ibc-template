@@ -12,7 +12,7 @@ struct PingPongPacket {
 library PingPongLib {
     bytes32 public constant PROTOCOL_VERSION = keccak256("ucs00-pingpong-1");
     bytes1 public constant ACK_SUCCESS = 0x01;
-    bytes1 public constant ACK_FAILURE = 0x01;
+    bytes1 public constant ACK_FAILURE = 0x00;
 
     error ErrInvalidVersion();
     error ErrNotIBC();
