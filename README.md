@@ -34,8 +34,6 @@ Make sure to have:
 
 Run the following command and make sure to save the resulting value (we name it `COSMWASM_CONTRACT_ADDRESS`) to then deploy the solidity contracts: `PRIVATE_KEY=<UNION_HEX_PRIVATE_KEY> make deploy-union`
 
-https://testnet.union.explorers.guru
-
 ### Solidity
 
 Make sure you have the cosmwasm address by deploying it first, then run: `COSMWASM_CONTRACT_ADDRESS=<ADDR> PRIVATE_KEY=<SEPOLIA_HEX_PRIVATE_KEY> make deploy-evm`
