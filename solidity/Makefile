@@ -19,8 +19,8 @@ deploy:
     --json \
 		--rpc-url ${rpc_url} \
 		--private-key ${PRIVATE_KEY} \
-		--constructor-args "${ibc_handler}" "${application_default_pingpong_timeout}" | jq .deployedTo | \
-		xargs -I{} cast send \
+		--constructor-args "${ibc_handler}" "${application_default_pingpong_timeout}" | jq -r .deployedTo | tr A-Z a-z | tee /dev/tty | \
+		xargs -I{} cast send --async \
 			--rpc-url ${rpc_url} \
 			--private-key ${PRIVATE_KEY} \
 			${ibc_handler} \
@@ -31,5 +31,5 @@ initiate:
 		--rpc-url ${rpc_url} \
 		--private-key ${PRIVATE_KEY} \
 		${CONTRACT_ADDRESS} \
-		"initiate((bool, uint64), uint64)" "(true, 18446744073709551615)" 18446744073709551615
+		"initiate((bool, uint64), uint64)" "(false, 18446744073709551615)" 18446744073709551615
 

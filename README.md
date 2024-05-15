@@ -40,13 +40,44 @@ https://testnet.union.explorers.guru
 
 Make sure you have the cosmwasm address by deploying it first, then run: `COSMWASM_CONTRACT_ADDRESS=<ADDR> PRIVATE_KEY=<SEPOLIA_HEX_PRIVATE_KEY> make deploy-evm`
 
-Go to [sepolia etherscan](https://sepolia.etherscan.io) and ensure the contract is created, the port is bound and that the `ChannelOpenInit` has been initiated:
+The command will yield two outputs something like this:
+```
+0x368c040e9b719f198d3a5983a2cc3e1652125cc2
+0x30e4bd8df72312464d3228bad542786c50d98143287096a4d66ecd1656c3a97c
+```
 
-![evm deployment diagram](./evm-deployment.png)
+The former is the freshly deployed contract address and the later is the channel open init tx hash.
+You need to wait for the handshake to complete in order to send packets over the channel. Sepolia finality is around 6 minutes (union is 6 seconds); which means the handshake will complete in approximately 12 to 18 minutes.
 
-## Calling the contracts
+You can track the state of your channel using `CONTRACT_ADDRESS="<EVM_CONTRACT_ADDRESS>" make check-channel`:
+```json
+{
+  "state": "STATE_OPEN",
+  "ordering": "ORDER_UNORDERED",
+  "counterparty": {
+    "port_id": "0x368c040e9b719f198d3a5983a2cc3e1652125cc2",
+    "channel_id": "channel-7"
+  },
+  "connection_hops": [
+    "connection-14"
+  ],
+  "version": "ucs00-pingpong-1",
+  "port_id": "wasm.union1saqnfplyg9qmts2ynunet8vgrjfqxzwts3vx65uydpfe0q7akwvsg9xaw9",
+  "channel_id": "channel-15"
+}
+```
 
-### Ping - Sepolia
+Once the channel is in the `STATE_OPEN`, you can start interacting.
+
+## Initiating the ping pong from sepolia
+
+### Using Forge
+
+Execute the following command: `PRIVATE_KEY=<SEPOLIA_HEX_PRIVATE_KEY> CONTRACT_ADDRESS=<EVM_CONTRACT_ADDRESS> make initiate-evm`
+
+After the transaction is sent, you'll be able to see packets going back and forth between your contracts.
+
+### Using Javascript
 
 Copy the relevant ABI:
 

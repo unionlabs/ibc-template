@@ -24,3 +24,6 @@ deploy: build
 		jq -r '.events[] | select(.type == "instantiate") | .attributes[] | select(.key == "_contract_address") | .value' | \
 		xargs -I{} echo "Contract address {}" && \
 		rm -rf /keyring/*
+
+check-channel:
+	${union_cmd} --node ${rpc_url} query ibc channel channels --output json | jq -r '.channels[] | select(.counterparty.port_id == "${CONTRACT_ADDRESS}")'
