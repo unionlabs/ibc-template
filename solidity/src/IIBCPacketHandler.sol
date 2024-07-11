@@ -9,17 +9,4 @@ interface IIBCPacketHandler {
         uint64 timeoutTimestamp,
         bytes calldata data
     ) external returns (uint64);
-
-    function recvPacket(MsgPacketRecv calldata msg_) external;
-
-    function writeAcknowledgement(
-        string calldata destinationChannel,
-        uint64 sequence,
-        bytes calldata acknowledgement
-    ) external;
-
-    function acknowledgePacket(MsgPacketAcknowledgement calldata msg_)
-        external;
-
-    function timeoutPacket(MsgPacketTimeout calldata msg_) external;
 }

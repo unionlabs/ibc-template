@@ -2,7 +2,7 @@
   description = "Unionlabs IBC Template";
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05-small";
     foundry.url = "github:shazow/foundry.nix/monthly";
     rust-overlay.url = "github:oxalica/rust-overlay";
   };
@@ -23,7 +23,7 @@
             foundry-bin
             binaryen
             unixtools.xxd
-            nodejs_21
+            nodejs
             python3
             bun
             (rust-bin.fromRustupToolchainFile ./rust-toolchain)

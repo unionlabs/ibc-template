@@ -1,4 +1,4 @@
-union_version := v0.22.0
+union_version := v0.24.0
 union_cmd := docker run --rm --network host -v /tmp:/tmp -v $(PWD)/cosmwasm/build:/build -v $(PWD)/cosmwasm/.keyring:/keyring ghcr.io/unionlabs/uniond-release:${union_version}
 
 rpc_url := https://rpc.testnet.bonlulu.uno:443
@@ -18,7 +18,7 @@ deploy: build
 		jq .txhash | \
 		xargs -I{} sh -c "${union_cmd} query event-query-tx-for {} --output json --node ${rpc_url} || ${union_cmd} query tx {} --output json --node ${rpc_url}" | \
 		jq -r '.events[] | select(.type == "store_code") | .attributes[] | select(.key == "code_id") | .value' | \
-		xargs -I{} ${union_cmd} tx wasm instantiate2 {} '{ "config": { "protocol_timeout": 3600000000000 }}' ${contract_salt} --label ${contract_label} --no-admin --gas auto --gas-adjustment 1.5 --output json -y --keyring-backend test --keyring-dir /keyring --node ${rpc_url} --chain-id ${chain_id} --from ${account_name} | \
+		xargs -I{} ${union_cmd} tx wasm instantiate2 {} '{ "config": { "protocol_timeout": 36000000000000 }}' ${contract_salt} --label ${contract_label} --no-admin --gas auto --gas-adjustment 1.5 --output json -y --keyring-backend test --keyring-dir /keyring --node ${rpc_url} --chain-id ${chain_id} --from ${account_name} | \
 		jq .txhash | \
 		xargs -I{} sh -c "${union_cmd} query event-query-tx-for {} --output json --node ${rpc_url} || ${union_cmd} query tx {} --output json --node ${rpc_url}" | \
 		jq -r '.events[] | select(.type == "instantiate") | .attributes[] | select(.key == "_contract_address") | .value' | \

@@ -62,9 +62,7 @@ contract PingPong is IIBCModule {
         );
     }
 
-    function onRecvPacketProcessing(IbcCoreChannelV1Packet.Data calldata packet, address relayer)
-        public
-    {
+    function onRecvPacketProcessing(IbcCoreChannelV1Packet.Data calldata packet, address relayer) public {
         require(msg.sender == address(this), "unauthorized");
 
         PingPongPacket memory pp = PingPongLib.decode(packet.data);
@@ -133,7 +131,8 @@ contract PingPong is IIBCModule {
         string calldata,
         string calldata,
         IbcCoreChannelV1Counterparty.Data calldata,
-        string calldata version
+        string calldata version,
+        address
     ) external virtual override onlyIBC {
         // This protocol is only accepting a single counterparty.
         if (bytes(channelId).length != 0) {
@@ -151,7 +150,8 @@ contract PingPong is IIBCModule {
         string calldata,
         IbcCoreChannelV1Counterparty.Data calldata,
         string calldata,
-        string calldata version
+        string calldata version,
+        address
     ) external virtual override onlyIBC {
         // Symmetric to onChanOpenInit
         if (bytes(channelId).length != 0) {
@@ -166,7 +166,8 @@ contract PingPong is IIBCModule {
         string calldata _portId,
         string calldata _channelId,
         string calldata,
-        string calldata counterpartyVersion
+        string calldata counterpartyVersion,
+        address
     ) external virtual override onlyIBC {
         if (keccak256(bytes(counterpartyVersion)) != PingPongLib.PROTOCOL_VERSION) {
             revert PingPongLib.ErrInvalidVersion();
@@ -175,17 +176,22 @@ contract PingPong is IIBCModule {
         channelId = _channelId;
     }
 
-    function onChanOpenConfirm(string calldata _portId, string calldata _channelId) external virtual override onlyIBC {
+    function onChanOpenConfirm(string calldata _portId, string calldata _channelId, address _relayer)
+        external
+        virtual
+        override
+        onlyIBC
+    {
         // Symmetric to onChanOpenAck
         channelId = _channelId;
     }
 
-    function onChanCloseInit(string calldata, string calldata) external virtual override onlyIBC {
+    function onChanCloseInit(string calldata, string calldata, address _relayer) external virtual override onlyIBC {
         // The ping-pong is infinite, closing the channel is disallowed.
         revert PingPongLib.ErrInfiniteGame();
     }
 
-    function onChanCloseConfirm(string calldata, string calldata) external virtual override onlyIBC {
+    function onChanCloseConfirm(string calldata, string calldata, address _relayer) external virtual override onlyIBC {
         // Symmetric to onChanCloseInit
         revert PingPongLib.ErrInfiniteGame();
     }

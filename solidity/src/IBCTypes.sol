@@ -75,23 +75,3 @@ library IbcCoreChannelV1GlobalEnums {
         ORDER_ORDERED
     }
 }
-
-struct MsgPacketRecv {
-    IbcCoreChannelV1Packet.Data packet;
-    bytes proof;
-    IbcCoreClientV1Height.Data proofHeight;
-}
-
-struct MsgPacketAcknowledgement {
-    IbcCoreChannelV1Packet.Data packet;
-    bytes acknowledgement;
-    bytes proof;
-    IbcCoreClientV1Height.Data proofHeight;
-}
-
-struct MsgPacketTimeout {
-    IbcCoreChannelV1Packet.Data packet;
-    bytes proof;
-    IbcCoreClientV1Height.Data proofHeight;
-    uint64 nextSequenceRecv;
-}

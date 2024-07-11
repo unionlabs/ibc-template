@@ -4,13 +4,13 @@ ibc_handler := 0xa390514f803a3b318b93bf6cd4beeb9f8299a0eb
 
 # Application specific, used when creating the contract (threaded to the
 # constructor). The version is provided when opening the channel.
-application_default_pingpong_timeout := "3600000000000"
+application_default_pingpong_timeout := "36000000000000"
 application_protocol_version = ucs00-pingpong-1
 
 channel_state_init := 1
 channel_order_unordered := 1
 # Pre-created by Union
-channel_connection := connection-0
+channel_connection := connection-5
 
 .PHONY: deploy
 
@@ -24,7 +24,7 @@ deploy:
 			--rpc-url ${rpc_url} \
 			--private-key ${PRIVATE_KEY} \
 			${ibc_handler} \
-			"channelOpenInit((string, (uint8, uint8, (string, string), string[], string)))" '("{}", (${channel_state_init}, ${channel_order_unordered}, ("wasm.${COSMWASM_CONTRACT_ADDRESS}", ""), ["${channel_connection}"], "${application_protocol_version}"))'
+			"channelOpenInit((string, (uint8, uint8, (string, string), string[], string), address))" '("{}", (${channel_state_init}, ${channel_order_unordered}, ("wasm.${COSMWASM_CONTRACT_ADDRESS}", ""), ["${channel_connection}"], "${application_protocol_version}"), {})'
 
 initiate:
 	cast send \
