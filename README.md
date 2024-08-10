@@ -2,7 +2,7 @@
 
 This repository is a template that you can fork to build a cross-chain protocol on the Union testnet, connecting to Sepolia.
 
-The template demonstrates a simple [ping-pong](https://union.build/docs/demos/pingpong/) as an example protocol, with implementatinos in both rust ([Cosmwasm](https://cosmwasm.com/)) and Solidity.
+The template demonstrates a simple [ping-pong](https://union.build/docs/demos/pingpong/) as an example protocol, with implementatinos in both rust [Cosmwasm](https://cosmwasm.com/) and [Solidity](https://docs.soliditylang.org/en/v0.8.24/).
 
 ## Development environment
 
